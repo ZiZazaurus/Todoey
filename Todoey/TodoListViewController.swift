@@ -12,7 +12,7 @@ class TodoListViewController: UITableViewController {
     
     
 
-    let itemArray = ["Eat gummy bears", "Dawdle mindlessly", "Record Hays doing weird shit"]
+    var itemArray = ["Eat gummy bears", "Dawdle mindlessly", "Record Hays doing weird shit"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,7 +44,6 @@ class TodoListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //print(itemArray[indexPath.row])
-        tableView.deselectRow(at: indexPath, animated: true)
         
         
         if tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark {
@@ -53,8 +52,39 @@ class TodoListViewController: UITableViewController {
             tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
         }
 
+          tableView.deselectRow(at: indexPath, animated: true)
+        
         }
 
+    //Mark - Add new items
+    
+    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+        
+        var textField = UITextField()
+        
+        let alert = UIAlertController(title: "Add New To Do Item", message: "", preferredStyle: .alert)
+   
+        let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
+            // what will happen once the user clicks the Add Item button on our UIAlert
+            
+            self.itemArray.append(textField.text!)
+            self.tableView.reloadData()
+            
+        }
+        alert.addTextField { (alertTextField) in
+            alertTextField.placeholder = "New To Do Item"
+            textField = alertTextField
+        }
+        
+            alert.addAction(action)
+        
+            present(alert, animated: true, completion: nil)
+        
+        
+    }
+    
+    
+    
     }
     
 
